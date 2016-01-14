@@ -98,12 +98,21 @@ function renderTable() {
   sectHead.appendChild(newTable);
 }
 
-function generateStoreData() {
+
+function generateStoreData(storeLoc) {
+  for(var i = 0; i < timesLength; i++) {
+    storeLoc.genHourlyStatistics();
+    storeLoc.dailyLbsSold += storeLoc.lbsSold[i];
+  }
+}
+
+function generateFullStoreData() {
   for(var i = 0; i < storeArray.length; i++) {
-    for(var j = 0; j < timesLength; j++) {
-      storeArray[i].genHourlyStatistics();
-      storeArray[i].dailyLbsSold += storeArray[i].lbsSold[j];
-    }
+    generateStoreData(storeArray[i]);
+    // for(var j = 0; j < timesLength; j++) {
+    //   storeArray[i].genHourlyStatistics();
+    //   storeArray[i].dailyLbsSold += storeArray[i].lbsSold[j];
+    // }
   }
 }
 
@@ -114,10 +123,13 @@ function addNewLocation(event) {
   if (!event.target.locName.value || !event.target.minCustPerHour.value || !event.target.maxCustPerHour.value || !event.target.cupsPerCust.value || !event.target.poundsToGoPerCust.value) {
     return alert('Please fill all form values');
   }
-  console.log('all data present');
+  console.log(event.target.locName.value);
+  var newStore = new StoreLocation(event.target.locName.value, event.target.minCustPerHour.value, event.target.maxCustPerHour.value, event.target.cupsPerCust.value, event.target.poundsToGoPerCust.value);
+  storeArray.push(newStore);
+
 }
 
-generateStoreData();
+generateFullStoreData();
 renderTable();
 
 newLoc.addEventListener('submit', addNewLocation);
