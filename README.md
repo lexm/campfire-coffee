@@ -8,3 +8,9 @@ page at data.html.
 
 2015-01-12 - Optimized code to use constructor functions; adapted output to
 produce HTML.
+
+2015-01-13 - CSS. Aarrgh. Hands type words...
+
+2015-01-14 -
+* added form to HTML. Driver: David Z. Navigator: Lex Myers
+* Added JS to add new store location to table - Lex

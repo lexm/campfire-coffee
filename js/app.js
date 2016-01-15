@@ -4,38 +4,47 @@ var   timesArray = ['6:00am', '7:00am', '8:00am', '9:00am', '10:00am', '11:00am'
                    '3:00pm', '4:00pm', '5:00pm', '6:00pm', '7:00pm', '8:00pm'];
 var   timesLength = timesArray.length;
 
-// var resultsBlank = {
-//   timeString: '',
-//   numberOfCustomers: 0,
-//   cupsSold: 0,
-//   lbsSold: 0
-// }
-
 function StoreLocation(locName, minCustPerHour, maxCustPerHour, cupsPerCust, lbsToGoPerCust) {
   this.locName = locName;
   this.minCustPerHour = minCustPerHour;
   this.maxCustPerHour = maxCustPerHour;
   this.cupsPerCust = cupsPerCust;
   this.lbsToGoPerCust = lbsToGoPerCust;
-  // this.results = resultsBlank;
   this.numberOfCustomers = [];
   this.cupsSold = [];
   this.lbsSold = [];
   this.dailyLbsSold = 0;
-  this.generateNumOfCustomers = function() {
-    return Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHour + 1) + this.minCustPerHour);
-  }
-  this.genHourlyStatistics = function() {
-//    this.results.timeString = timesArray[i];
-    this.numberOfCustomers.push(this.generateNumOfCustomers());
-    var arrPosition = this.numberOfCustomers.length - 1;
-    this.cupsSold.push(this.numberOfCustomers[arrPosition] * this.cupsPerCust);
-    this.lbsSold.push((this.numberOfCustomers[arrPosition] * this.lbsToGoPerCust) + (this.cupsSold[this.cupsSold.length - 1] / 20));
-    return;
+}
+
+StoreLocation.prototype.generateNumOfCustomers = function() {
+  var minCPH = this.minCustPerHour;
+  var maxCPH = this.maxCustPerHour;
+  var nCust = Math.floor((Math.random() * (maxCPH - minCPH + 1)) + minCPH);
+  // console.log(maxCPH + " " + minCPH + " " + nCust);
+  return nCust;
+}
+
+StoreLocation.prototype.genHourlyStatistics = function() {
+  this.numberOfCustomers.push(this.generateNumOfCustomers());
+  var arrPosition = this.numberOfCustomers.length - 1;
+  this.cupsSold.push(this.numberOfCustomers[arrPosition] * this.cupsPerCust);
+  this.lbsSold.push((this.numberOfCustomers[arrPosition] * this.lbsToGoPerCust) + (this.cupsSold[this.cupsSold.length - 1] / 20));
+  return;
+}
+
+function generateStoreData(storeLoc) {
+  for(var i = 0; i < timesLength; i++) {
+    storeLoc.genHourlyStatistics();
+//    console.log(storeLoc);
+    storeLoc.dailyLbsSold += storeLoc.lbsSold[i];
   }
 }
 
-
+function generateFullStoreData() {
+  for(var i = 0; i < storeArray.length; i++) {
+    generateStoreData(storeArray[i]);
+  }
+}
 // storeArray contains a set of objects, each representing a store location
 
 var storeArray = [];
@@ -96,40 +105,27 @@ function renderTable() {
   }
   newTable.appendChild(newTableHead);
   sectHead.appendChild(newTable);
+  return newTableHead;
 }
 
-
-function generateStoreData(storeLoc) {
-  for(var i = 0; i < timesLength; i++) {
-    storeLoc.genHourlyStatistics();
-    storeLoc.dailyLbsSold += storeLoc.lbsSold[i];
-  }
-}
-
-function generateFullStoreData() {
-  for(var i = 0; i < storeArray.length; i++) {
-    generateStoreData(storeArray[i]);
-    // for(var j = 0; j < timesLength; j++) {
-    //   storeArray[i].genHourlyStatistics();
-    //   storeArray[i].dailyLbsSold += storeArray[i].lbsSold[j];
-    // }
-  }
-}
 
 function addNewLocation(event) {
-  console.log(event);
   event.preventDefault();
-
   if (!event.target.locName.value || !event.target.minCustPerHour.value || !event.target.maxCustPerHour.value || !event.target.cupsPerCust.value || !event.target.poundsToGoPerCust.value) {
     return alert('Please fill all form values');
   }
-  console.log(event.target.locName.value);
-  var newStore = new StoreLocation(event.target.locName.value, event.target.minCustPerHour.value, event.target.maxCustPerHour.value, event.target.cupsPerCust.value, event.target.poundsToGoPerCust.value);
+  var newLocName = event.target.locName.value;
+  var newMinCustPerHour = parseFloat(event.target.minCustPerHour.value);
+  var newMaxCustPerHour = parseFloat(event.target.maxCustPerHour.value);
+  var newCupsPerCust = parseFloat(event.target.cupsPerCust.value);
+  var newPoundsToGoPerCust = parseFloat(event.target.poundsToGoPerCust.value)
+  var newStore = new StoreLocation(newLocName, newMinCustPerHour, newMaxCustPerHour, newCupsPerCust, newPoundsToGoPerCust);
+  generateStoreData(newStore);
   storeArray.push(newStore);
-
+  firstTableHead.appendChild(renderStoreRow(newStore.locName, newStore.lbsSold, newStore.dailyLbsSold.toFixed(1), false));
 }
 
 generateFullStoreData();
-renderTable();
+var firstTableHead = renderTable();
 
 newLoc.addEventListener('submit', addNewLocation);
