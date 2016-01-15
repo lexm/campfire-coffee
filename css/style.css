@@ -31,8 +31,9 @@ ul {
   text-align: center;
 }
 
-.logo {
+img.logo {
   float: right;
+  
 }
 
 h1 {
