@@ -53,3 +53,28 @@ th, td {
 table {
   border-collapse: collapse;
 }
+
+/*img.leftimg {
+  float: left;
+}*/
+
+.bouttext {
+  display: block;
+  margin: 20px;
+  flex: 1 1 auto;
+}
+
+/*.field {
+  width: 500px;
+}*/
+
+.field-title {
+  float: left;
+  width: 250px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.coming-soon {
+  text-align: center;
+}
