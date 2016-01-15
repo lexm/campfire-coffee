@@ -14,3 +14,5 @@ produce HTML.
 2015-01-14 -
 * added form to HTML. Driver: David Z. Navigator: Lex Myers
 * Added JS to add new store location to table - Lex
+
+2015-01-15 - Improved layout (which is not saying much...)
