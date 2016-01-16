@@ -41,6 +41,10 @@ h1 {
   margin-bottom: 10px;
 }
 
+h2 {
+  text-align: center;
+}
+
 h3 {
   font-size: 120%;
   margin: 0px;
@@ -77,4 +81,16 @@ table {
 
 .coming-soon {
   text-align: center;
+}
+
+.locset {
+  display: flex;
+  justify-content: center;
+}
+
+.loc-addr {
+  border:  2px solid #e7642c;
+  width: 200px;
+  margin: 10px;
+  padding-left: 10px;
 }
