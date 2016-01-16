@@ -33,12 +33,16 @@ ul {
 
 img.logo {
   float: right;
-  
+  height: 100%;
 }
 
 h1 {
   font-size: 250%;
   margin-bottom: 10px;
+}
+
+h2 {
+  text-align: center;
 }
 
 h3 {
@@ -52,4 +56,41 @@ th, td {
 
 table {
   border-collapse: collapse;
+}
+
+/*img.leftimg {
+  float: left;
+}*/
+
+.bouttext {
+  display: block;
+  margin: 20px;
+  flex: 1 1 auto;
+}
+
+/*.field {
+  width: 500px;
+}*/
+
+.field-title {
+  float: left;
+  width: 250px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.coming-soon {
+  text-align: center;
+}
+
+.locset {
+  display: flex;
+  justify-content: center;
+}
+
+.loc-addr {
+  border:  2px solid #e7642c;
+  width: 200px;
+  margin: 10px;
+  padding-left: 10px;
 }
