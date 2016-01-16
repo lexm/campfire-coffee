@@ -94,3 +94,8 @@ table {
   margin: 10px;
   padding-left: 10px;
 }
+
+.cntrimg {
+  margin: auto;
+  /*width: 100%;*/
+}
