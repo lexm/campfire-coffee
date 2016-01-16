@@ -74,24 +74,43 @@ function renderStoreRow(rowHdrText, rowContentArray, rowTotal, isHeader) {
   var rowElementArray = [];
   rowElementArray[0] = document.createElement('th');
   rowElementArray[0].textContent = rowHdrText;
+
+  var nodeTag = 'td'
   if(isHeader) {
-    for(var i = 0; i <= timesLength; i++) {
-      rowElementArray[i + 1] = document.createElement('th');
+    nodeTag = 'th';
+  }
+  for(var i = 0; i <= timesLength; i++) {
+    rowElementArray[i + 1] = document.createElement(nodeTag);
+    if(isHeader) {
       rowElementArray[i + 1].textContent = rowContentArray[i];
-    }
-    rowElementArray[timesLength + 1]  = document.createElement('th');
-    rowElementArray[i].textContent = "Totals";
-  } else {
-    for(var i = 0; i <= timesLength; i++) {
-      rowElementArray[i + 1] = document.createElement('td');
+    } else {
       rowElementArray[i + 1].textContent = parseFloat(rowContentArray[i]).toFixed(1);
     }
-    rowElementArray[timesLength + 1]  = document.createElement('td');
-    rowElementArray[i].textContent = rowTotal;
   }
+  rowElementArray[timesLength + 1] = document.createElement(nodeTag);
+  rowElementArray[timesLength + 1].textContent = rowTotal;
+
+
+  // if(isHeader) {
+  //   for(var i = 0; i <= timesLength; i++) {
+  //     rowElementArray[i + 1] = document.createElement('th');
+  //     rowElementArray[i + 1].textContent = rowContentArray[i];
+  //   }
+  //   rowElementArray[timesLength + 1]  = document.createElement('th');
+  //   rowElementArray[timesLength + 1].textContent = 'Totals';
+  // } else {
+  //   for(var i = 0; i <= timesLength; i++) {
+  //     rowElementArray[i + 1] = document.createElement('td');
+  //     rowElementArray[i + 1].textContent = parseFloat(rowContentArray[i]).toFixed(1);
+  //   }
+  //   rowElementArray[timesLength + 1]  = document.createElement('td');
+  //   rowElementArray[timesLength + 1].textContent = rowTotal;
+  // }
+
     for(var i = 0; i <= timesLength + 1; i++) {
       newRow.appendChild(rowElementArray[i]);
     }
+    console.log(newRow);
     return newRow;
 }
 
