@@ -15,5 +15,11 @@ produce HTML.
 * added form to HTML. Driver: David Z. Navigator: Lex Myers
 * Added JS to add new store location to table - Lex
 
-2015-01-15 - Improved layout (not saying a lot there), added all the stuff
-(images, ipsum text-align) that I was supposed to have done on Wednesday.
+2015-01-15 - Improved layout, added content
+images, ipsum, etc.
+
+2015-01-16 - Added Javascript to generate second table on data.html listing
+the number of customers served at each location. Revised locations.html to
+show the addresses in Flexboxes, and added links to Google Maps for each
+location. Kudos go to David Heyduck for offering the new open-sourced Campfire
+Coffee logo.
