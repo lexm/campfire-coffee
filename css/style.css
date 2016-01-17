@@ -62,8 +62,13 @@ table {
 .bouttext {
   display: block;
   margin: 20px;
-  flex: 1 1 auto;
+  /*flex: 1 1 auto;*/
+  column-count: 2;
 }
+
+/*.col2 {
+  column-count: 2;
+}*/
 
 /*.field {
   width: 500px;
