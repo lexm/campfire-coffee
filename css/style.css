@@ -55,24 +55,10 @@ table {
   border-collapse: collapse;
 }
 
-/*img.leftimg {
-  float: left;
-}*/
-
 .bouttext {
   display: block;
   margin: 20px;
-  /*flex: 1 1 auto;*/
-  column-count: 2;
 }
-
-/*.col2 {
-  column-count: 2;
-}*/
-
-/*.field {
-  width: 500px;
-}*/
 
 .field-title {
   float: left;
@@ -105,5 +91,4 @@ table {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  /*width: 100%;*/
 }

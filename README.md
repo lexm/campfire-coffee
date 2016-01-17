@@ -21,4 +21,5 @@ images, ipsum, etc.
 2015-01-16 - Added Javascript to generate second table on data.html listing
 the number of customers served at each location. Revised locations.html to
 show the addresses in Flexboxes, and added links to Google Maps for each
-location.
+location. Kudos go to David Heyduck for offering the new open-sourced Campfire
+Coffee logo.
