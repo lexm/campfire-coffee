@@ -83,6 +83,10 @@ table {
   text-align: center;
 }
 
+.current {
+  font-weight: bold;
+}
+
 .locset {
   display: flex;
   justify-content: center;
@@ -96,6 +100,8 @@ table {
 }
 
 .cntrimg {
-  margin: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   /*width: 100%;*/
 }
