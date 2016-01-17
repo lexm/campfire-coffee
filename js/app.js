@@ -14,6 +14,7 @@ function StoreLocation(locName, minCustPerHour, maxCustPerHour, cupsPerCust, lbs
   this.cupsSold = [];
   this.lbsSold = [];
   this.dailyLbsSold = 0;
+  this.dailyNumCustomers = 0;
 }
 
 StoreLocation.prototype.generateNumOfCustomers = function() {
@@ -37,6 +38,7 @@ function generateStoreData(storeLoc) {
     storeLoc.genHourlyStatistics();
 //    console.log(storeLoc);
     storeLoc.dailyLbsSold += storeLoc.lbsSold[i];
+    storeLoc.dailyNumCustomers += storeLoc.numberOfCustomers[i];
   }
 }
 
@@ -69,44 +71,66 @@ var newLoc = document.getElementById('new-loc');
 // for each element. 'header' is a boolean indicating in the row is at the
 // head of the table.
 
-function renderStoreRow(rowHdrText, rowContentArray, rowTotal, isHeader) {
+function renderStoreRow(rowHdrText, rowContentArray, rowTotal, isHeader, noFloat) {
   var newRow = document.createElement('tr');
   var rowElementArray = [];
   rowElementArray[0] = document.createElement('th');
   rowElementArray[0].textContent = rowHdrText;
+
+  var nodeTag = 'td'
   if(isHeader) {
-    for(var i = 0; i <= timesLength; i++) {
-      rowElementArray[i + 1] = document.createElement('th');
+    nodeTag = 'th';
+  }
+  for(var i = 0; i <= timesLength; i++) {
+    rowElementArray[i + 1] = document.createElement(nodeTag);
+    if(isHeader || noFloat) {
       rowElementArray[i + 1].textContent = rowContentArray[i];
-    }
-    rowElementArray[timesLength + 1]  = document.createElement('th');
-    rowElementArray[i].textContent = "Totals";
-  } else {
-    for(var i = 0; i <= timesLength; i++) {
-      rowElementArray[i + 1] = document.createElement('td');
+    } else {
       rowElementArray[i + 1].textContent = parseFloat(rowContentArray[i]).toFixed(1);
     }
-    rowElementArray[timesLength + 1]  = document.createElement('td');
-    rowElementArray[i].textContent = rowTotal;
   }
-    for(var i = 0; i <= timesLength + 1; i++) {
-      newRow.appendChild(rowElementArray[i]);
-    }
-    return newRow;
+  rowElementArray[timesLength + 1] = document.createElement(nodeTag);
+  rowElementArray[timesLength + 1].textContent = rowTotal;
+
+  for(var i = 0; i <= timesLength + 1; i++) {
+    newRow.appendChild(rowElementArray[i]);
+  }
+  return newRow;
 }
 
-function renderTable() {
+function renderTable(tableNumber) {
   var newTable = document.createElement('table');
-  var newTableHead =document.createElement('thead');
+  var newTableHead = document.createElement('thead');
+  var newTableTitle = document.createElement('h2');
+  var currLocName = '';
+  var currHourlyNum = '';
+  var currDailyNum = '';
+  var tableTitle = '<h2>';
+  if (tableNumber === 1) {
+    newTableTitle.textContent = 'Number of pounds of coffee needed';
+  } else if (tableNumber === 2) {
+    newTableTitle.textContent = 'Number of customers served';
+  }
   // create a header for the table
-  newTableHead.appendChild(renderStoreRow("", timesArray, "Totals", true));
+  newTableHead.appendChild(renderStoreRow('', timesArray, 'Total', true));
   for(var i = 0; i < storeArray.length; i++) {
-    newTableHead.appendChild(renderStoreRow(storeArray[i].locName, storeArray[i].lbsSold, storeArray[i].dailyLbsSold.toFixed(1), false));
+    currLocName = storeArray[i].locName;
+    if (tableNumber === 1) {
+      currHourlyNum = storeArray[i].lbsSold;
+      currDailyNum = storeArray[i].dailyLbsSold.toFixed(1);
+      newTableHead.appendChild(renderStoreRow(currLocName, currHourlyNum, currDailyNum, false, false));
+    } else if (tableNumber === 2) {
+      currHourlyNum = storeArray[i].numberOfCustomers;
+      currDailyNum = storeArray[i].dailyNumCustomers;
+      newTableHead.appendChild(renderStoreRow(currLocName, currHourlyNum, currDailyNum, false, true));
+    }
   }
   newTable.appendChild(newTableHead);
+  sectHead.appendChild(newTableTitle);
   sectHead.appendChild(newTable);
   return newTableHead;
 }
+
 
 
 function addNewLocation(event) {
@@ -122,10 +146,13 @@ function addNewLocation(event) {
   var newStore = new StoreLocation(newLocName, newMinCustPerHour, newMaxCustPerHour, newCupsPerCust, newPoundsToGoPerCust);
   generateStoreData(newStore);
   storeArray.push(newStore);
-  firstTableHead.appendChild(renderStoreRow(newStore.locName, newStore.lbsSold, newStore.dailyLbsSold.toFixed(1), false));
+  tableHeadOne.appendChild(renderStoreRow(newStore.locName, newStore.lbsSold, newStore.dailyLbsSold.toFixed(1), false, false));
+  tableHeadTwo.appendChild(renderStoreRow(newStore.locName, newStore.numberOfCustomers, newStore.dailyNumCustomers, false, true))
 }
 
+
 generateFullStoreData();
-var firstTableHead = renderTable();
+var tableHeadOne = renderTable(1);
+var tableHeadTwo = renderTable(2);
 
 newLoc.addEventListener('submit', addNewLocation);
